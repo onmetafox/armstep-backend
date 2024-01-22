@@ -1,0 +1,51 @@
+{
+  "name": "armstep_backend",
+  "version": "1.0.0",
+  "description": "This is the armstep website backend project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "npx nodemon --experimental-specifier-resolution=node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "armstep",
+    "backend",
+    "node",
+    "express"
+  ],
+  "author": "metafox",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cryptr": "^6.2.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validation": "^4.1.0",
+    "express-winston": "^4.2.0",
+    "glob": "^10.3.3",
+    "helmet": "^7.0.0",
+    "http-status": "^1.6.2",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "method-override": "^3.0.0",
+    "moment-timezone": "^0.5.43",
+    "mongoose": "^7.4.2",
+    "morgan": "^1.10.0",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "s": "^1.0.0",
+    "swagger-ui-express": "^5.0.0",
+    "winston": "^3.10.0"
+  },
+  "resolutions": {
+    "graceful-fs": "^4.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

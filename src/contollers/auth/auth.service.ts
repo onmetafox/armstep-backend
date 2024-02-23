@@ -16,7 +16,7 @@ export class AuthService extends BaseService<Users>{
 
     async validateUser(user: any) {
         // find if user exist with this email
-        const userData = await this.usersModel.findOne({email: user.email});
+        const userData = await this.usersModel.findOne({email: user.email}).exec();
         if (!userData) {
             return {
                 "success": false,
@@ -47,8 +47,10 @@ export class AuthService extends BaseService<Users>{
         return { user, token };
     }
     public async create(user) {
+        
+        const token = await this.generateToken(user);
 
-        const userData = await this.usersModel.findOne({email: user.email});
+        const userData = await this.usersModel.findOne({email: user.email}).exec();
         if (userData) {
             return {
                 "success": false,
@@ -61,15 +63,13 @@ export class AuthService extends BaseService<Users>{
 
         // create the user
         const newUser = await this.usersModel.create({ ...user, password: pass });
-
         // tslint:disable-next-line: no-string-literal
-        const { password, ...result } = newUser;
+        const { password, ...result } = newUser.toJSON();
 
         // generate token
-        const token = await this.generateToken(result);
 
         // return the user and the token
-        return { user: result, token };
+        return { user: result };
     }
     private async generateToken(user) {
         const token = await this.jwtService.signAsync(user);

@@ -1,11 +1,9 @@
-import { Body, Controller, Post, Res, Get, HttpStatus, Put, UseGuards, Param } from '@nestjs/common';
-import * as rawbody from 'raw-body';
-import { Request } from 'express';
+import { Body, Controller, Post, Res, Get, HttpStatus, Put, Request, UseGuards, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from 'src/dtos/users/create-user.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from 'src/core/auth.strategy';
 
-@UseGuards(AuthGuard('jwt'))
+
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
@@ -13,6 +11,7 @@ export class UsersController {
     async updateUser(){
 
     }
+    @UseGuards(AuthGuard)
     @Get("/:id")
     async getUser(@Res() response, @Param('id') id: string){
         try{

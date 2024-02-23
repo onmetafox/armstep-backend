@@ -31,7 +31,6 @@ export class BaseService <T> implements ExceptionFilter { catch(exception: typeo
             return doc.save();
             
         } catch (e) {
-            console.log(e);
             throw new InternalServerErrorException(
                 'Error occurred while fetching data from MongoDB.',
                 e,

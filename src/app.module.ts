@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { JwtModule } from '@nestjs/jwt';
 
-import { UsersModule } from './contollers/users/users.module';
-import { AuthModule } from './contollers/auth/auth.module';
+import { UsersModule } from './controllers/users/users.module';
+import { AuthModule } from './controllers/auth/auth.module';
+import { CategoriesModule } from './controllers/categories/categories.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
-import { config } from './config/config';
+// import { ServiceModel } from './models/services.model';
 
 @Module({
   imports: [
@@ -17,7 +16,9 @@ import { config } from './config/config';
       isGlobal: true
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    CategoriesModule,
+    // ServiceModel
   ],
   controllers: [AppController],
   providers: [

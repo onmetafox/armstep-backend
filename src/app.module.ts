@@ -11,6 +11,8 @@ import { CategoriesModule } from './controllers/categories/categories.module';
 import { ServicesModule } from './controllers/services/services.module';
 import { TeamsModule } from './controllers/teams/teams.module';
 import { TechnologiesModule } from './controllers/technologies/technologies.module';
+import { ProjectsModule } from './controllers/projects/projects.module';
+import { ReviewsModule } from './controllers/reviews/reviews.module';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017',{dbName: 'armstep'}),
@@ -22,7 +24,9 @@ import { TechnologiesModule } from './controllers/technologies/technologies.modu
     CategoriesModule,
     ServicesModule,
     TeamsModule,
-    TechnologiesModule
+    TechnologiesModule,
+    ProjectsModule,
+    ReviewsModule
   ],
   controllers: [AppController],
   providers: [

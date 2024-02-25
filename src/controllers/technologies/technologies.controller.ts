@@ -1,20 +1,20 @@
 import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete } from '@nestjs/common';
-import { ServicesService } from './services.service';
-import { CreateServiceDto } from 'src/dtos/services/create-service.dto';
-import { UpdateServiceDto } from 'src/dtos/services/update-service.dto';
+import { TechnologiesService } from './technologies.service';
+import { CreateTechnologyDto } from 'src/dtos/technologies/create-technology.dto';
+import { UpdateTechnologyeDto } from 'src/dtos/technologies/update-technology';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
-@Controller('services')
-export class ServicesController {
-  constructor(private readonly service: ServicesService) {}
 
+@Controller('technologies')
+export class TechnologiesController {
+  constructor(private readonly service: TechnologiesService) {}
   @UseGuards(AuthGuard)
   @Post()
-  async createData(@Res() res, @Body() createDto: CreateServiceDto){
+  async createData(@Res() res, @Body() createDto: CreateTechnologyDto){
       try{
           const result = await this.service.create(createDto);
           return res.status(HttpStatus.OK).json({
-              msg: "Service created successfully",
+              msg: "Technology created successfully",
               result
           })
       }catch(e){
@@ -29,7 +29,7 @@ export class ServicesController {
       try{
           const result = await this.service.findAll(where);
           return res.status(HttpStatus.OK).json({
-              msg: "Service founds successfully",
+              msg: "Technology founds successfully",
               result
           })
       }catch(e){
@@ -42,7 +42,7 @@ export class ServicesController {
       try{
           const result = await this.service.findOne(id);
           return res.status(HttpStatus.OK).json({
-              msg: "Service created successfully",
+              msg: "Technology created successfully",
               result
           })
       }catch(e){
@@ -52,11 +52,11 @@ export class ServicesController {
 
   @UseGuards(AuthGuard)
   @Put(":id")
-  async updateData(@Res() res, @Param("id") id: string, @Body() data:UpdateServiceDto){
+  async updateData(@Res() res, @Param("id") id: string, @Body() data:UpdateTechnologyeDto){
       try{
           const result = await this.service.update(id, data);
           return res.status(HttpStatus.OK).json({
-              msg: "Service founds successfully",
+              msg: "Technology founds successfully",
               result
           })
       }catch(e){
@@ -70,7 +70,7 @@ export class ServicesController {
       try{
           const result = await this.service.remove(id);
           return res.status(HttpStatus.OK).json({
-              msg: "Service founds successfully",
+              msg: "Technology founds successfully",
               result
           })
       }catch(e){

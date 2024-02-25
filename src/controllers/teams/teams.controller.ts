@@ -1,20 +1,22 @@
 import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from 'src/dtos/categoires/create-category.dto';
-import { UpdateCategoryDto } from 'src/dtos/categoires/update-category.dto';
+
+import { CreateTeamDto } from 'src/dtos/teams/create-team.dto';
+import { UpdateTeamDto } from 'src/dtos/teams/update-team.dto';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
-@Controller('categories')
-export class CategoriesController {
-    constructor (private readonly service: CategoriesService){}
+import { TeamsService } from './teams.service';
 
-    @UseGuards(AuthGuard)
+@Controller('teams')
+export class TeamsController {
+  constructor(private readonly service: TeamsService) {}
+
+  @UseGuards(AuthGuard)
     @Post()
-    async createData(@Res() res, @Body() category: CreateCategoryDto){
+    async createData(@Res() res, @Body() data: CreateTeamDto){
         try{
-            const result = await this.service.create(category);
+            const result = await this.service.create(data);
             return res.status(HttpStatus.OK).json({
-                msg: "Category created successfully",
+                msg: "Team created successfully",
                 result
             })
         }catch(e){
@@ -27,7 +29,7 @@ export class CategoriesController {
         try{
             const result = await this.service.findOne(id);
             return res.status(HttpStatus.OK).json({
-                msg: "Category created successfully",
+                msg: "Team created successfully",
                 result
             })
         }catch(e){
@@ -42,7 +44,7 @@ export class CategoriesController {
         try{
             const result = await this.service.findAll(where);
             return res.status(HttpStatus.OK).json({
-                msg: "Category founds successfully",
+                msg: "Team founds successfully",
                 result
             })
         }catch(e){
@@ -52,11 +54,11 @@ export class CategoriesController {
 
     @UseGuards(AuthGuard)
     @Put(":id")
-    async updateData(@Res() res, @Param("id") id: string, @Body() data:UpdateCategoryDto){
+    async updateData(@Res() res, @Param("id") id: string, @Body() data:UpdateTeamDto){
         try{
             const result = await this.service.update(id, data);
             return res.status(HttpStatus.OK).json({
-                msg: "Category founds successfully",
+                msg: "Team founds successfully",
                 result
             })
         }catch(e){

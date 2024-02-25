@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CategoriesController } from './categories.controller';
 import { JwtService } from '@nestjs/jwt';
-import { CategoriesSchema } from 'src/models/categories.model';
 
+import { CategoriesController } from './categories.controller';
+import { CategoriesSchema } from 'src/models/categories.model';
+import { CategoriesService } from './categories.service';
 @Module({
   controllers: [CategoriesController],
     imports: [
@@ -12,7 +12,7 @@ import { CategoriesSchema } from 'src/models/categories.model';
     ],
     providers: [
       CategoriesService,
-      JwtService
+      JwtService,
     ]
 })
 export class CategoriesModule {}

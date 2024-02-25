@@ -13,8 +13,5 @@ export class CreateCategoryDto {
     icons: Icon[]
 
     @IsNotEmpty()
-    readonly status: string;
-
-    
-
+    status: string;
 }

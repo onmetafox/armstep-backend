@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document, Schema as MongooseSchema, model, Model } from 'mongoose';
+import { model, Document } from 'mongoose';
 
 export interface Icon extends Document {
     title: string;
@@ -9,7 +9,7 @@ export interface Icon extends Document {
 export interface Categories extends Document {
     title: string;
     detail: string;
-    // icons: Icon[];
+    icons: Icon[];
     status: string;
 }
 
@@ -21,8 +21,8 @@ export class SchemaData {
     @Prop({ required: true })
     detail: string;
     
-    // @Prop()
-    // icons: Icon[];
+    @Prop()
+    icons: Icon[];
     
     @Prop({ default: "1" })
     status: string;
@@ -30,4 +30,4 @@ export class SchemaData {
 
 export const CategoriesSchema = SchemaFactory.createForClass(SchemaData);
 
-export const CategoriesModel: Model<Categories> = model<Categories>('Category', CategoriesSchema);
+export const CategoriesModel = model<Categories>('Category', CategoriesSchema);

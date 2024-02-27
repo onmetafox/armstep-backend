@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 
@@ -13,9 +13,16 @@ import { TeamsModule } from './controllers/teams/teams.module';
 import { TechnologiesModule } from './controllers/technologies/technologies.module';
 import { ProjectsModule } from './controllers/projects/projects.module';
 import { ReviewsModule } from './controllers/reviews/reviews.module';
+
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017',{dbName: 'armstep'}),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async(config: ConfigService) => ({
+        uri: config.get<string>('MONGO_URL')
+      })
+    }),
     ConfigModule.forRoot({
       isGlobal: true
     }),

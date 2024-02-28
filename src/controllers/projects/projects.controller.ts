@@ -28,7 +28,6 @@ export class ProjectsController {
             }
     }
 
-    @UseGuards(AuthGuard)
     @Get()
     async findAll(@Res() res){
         const where:BaseWhereDto = new BaseWhereDto({})
@@ -55,10 +54,9 @@ export class ProjectsController {
         }),
     )
     async local(@UploadedFile() file: Express.Multer.File) {
-        console.log(file)
         return {
             statusCode: 200,
-            data: file.path,
+            data: file,
         };
     }
     @Get(":id")

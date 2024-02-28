@@ -15,7 +15,7 @@ import { BaseWhereDto } from "./base-where.dto";
 export class BaseService <T> implements ExceptionFilter { catch(exception: typeof MongoError, host: ArgumentsHost) {}
     
     constructor(@InjectModel('model') private model: Model<T>) {}
-    PAGE: number = 0;
+    PAGE: number = 1;
     PAGE_SIZE: number = 20;
     WHERE: BaseWhereDto;
 
@@ -82,12 +82,9 @@ export class BaseService <T> implements ExceptionFilter { catch(exception: typeo
         this.WHERE = where;
 
         delete where.page;
-
-        const objectsCount = await this.model.countDocuments({where}, function(err, count){
-
-        });
+        
+        const objectsCount = await this.model.countDocuments({where}).exec();
         const pageCount = Math.ceil(objectsCount / this.PAGE_SIZE);
-
         const data = await this.model
         .find(where)
         .skip((this.PAGE - 1) * this.PAGE_SIZE)

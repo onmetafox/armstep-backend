@@ -11,15 +11,15 @@ export class ProjectsController {
   @UseGuards(AuthGuard)
   @Post()
   async createData(@Res() res, @Body() createDto: CreateProjectDto){
-      try{
-          const result = await this.service.create(createDto);
-          return res.status(HttpStatus.OK).json({
-              msg: "Project created successfully",
-              result
-          })
-      }catch(e){
-          return res.status(e.status).json(e.response);
-      }
+        try{
+            const result = await this.service.create(createDto);
+            return res.status(HttpStatus.OK).json({
+                msg: "Project created successfully",
+                result
+            })
+        }catch(e){
+            return res.status(e.status).json(e.response);
+        }
   }
 
   @UseGuards(AuthGuard)

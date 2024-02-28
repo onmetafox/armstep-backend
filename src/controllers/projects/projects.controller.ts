@@ -1,4 +1,6 @@
-import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete } from '@nestjs/common';
+import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete, UploadedFile, UseInterceptors, } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from '../../dtos/projects/create-project.dto';
 import { UpdateProjectDto } from '../../dtos/projects/update-project.dto';
@@ -10,7 +12,7 @@ export class ProjectsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async createData(@Res() res, @Body() createDto: CreateProjectDto){
+  async createData(@Res() res, @Body() createDto:CreateProjectDto){
         try{
             const result = await this.service.create(createDto);
             return res.status(HttpStatus.OK).json({
@@ -36,7 +38,18 @@ export class ProjectsController {
           return res.status(e.status).json(e.response);
       }
   }
-
+    // @UseGuards(AuthGuard)
+    // @UseInterceptors(FileInterceptor('file'))
+    // @Post('file')
+    // uploadFile(
+    // // @Body() body: SampleDto,
+    // @UploadedFile() file: Express.Multer.File,
+    // ) {
+    //     console.log(file)
+    //     return {
+    //         file: file.buffer.toString(),
+    //     };
+    // }
   @Get(":id")
   async findOne(@Res() res, @Param('id') id: string){
       try{

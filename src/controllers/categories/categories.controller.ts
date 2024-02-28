@@ -1,9 +1,14 @@
-import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete } from '@nestjs/common';
+import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, UseInterceptors, UploadedFile, Delete } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import { diskStorage } from 'multer';
+
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from 'src/dtos/categoires/create-category.dto';
 import { UpdateCategoryDto } from 'src/dtos/categoires/update-category.dto';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
+import { generateFileName } from 'src/core/helper';
 @Controller('categories')
 export class CategoriesController {
     constructor (private readonly service: CategoriesService){}
@@ -34,7 +39,25 @@ export class CategoriesController {
             return res.status(e.status).json(e.response);
         }
     }
-
+    @UseGuards(AuthGuard)
+    @Post('upload')
+    @UseInterceptors(
+        FileInterceptor('file', {
+            storage: diskStorage({
+                destination: '/public/upload/category',
+                    filename: (req, file, cb) => {
+                    cb(null, generateFileName(file.originalname));
+                },
+            }),
+        }),
+    )
+    async local(@UploadedFile() file: Express.Multer.File) {
+        console.log(file)
+        return {
+            statusCode: 200,
+            data: file.path,
+        };
+    }
     @UseGuards(AuthGuard)
     @Get()
     async findAll(@Res() res){

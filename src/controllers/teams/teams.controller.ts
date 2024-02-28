@@ -1,16 +1,20 @@
-import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete } from '@nestjs/common';
+import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import { diskStorage } from 'multer';
 
 import { CreateTeamDto } from 'src/dtos/teams/create-team.dto';
 import { UpdateTeamDto } from 'src/dtos/teams/update-team.dto';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
 import { TeamsService } from './teams.service';
+import { generateFileName } from 'src/core/helper';
 
 @Controller('teams')
 export class TeamsController {
-  constructor(private readonly service: TeamsService) {}
+    constructor(private readonly service: TeamsService) {}
 
-  @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard)
     @Post()
     async createData(@Res() res, @Body() data: CreateTeamDto){
         try{
@@ -78,5 +82,24 @@ export class TeamsController {
         }catch(e){
             return res.status(e.status).json(e.response);
         }
+    }
+    @UseGuards(AuthGuard)
+    @Post('upload')
+    @UseInterceptors(
+        FileInterceptor('file', {
+            storage: diskStorage({
+                destination: '/public/upload/projects',
+                    filename: (req, file, cb) => {
+                    cb(null, generateFileName(file.originalname));
+                },
+            }),
+        }),
+    )
+    async local(@UploadedFile() file: Express.Multer.File) {
+        console.log(file)
+        return {
+            statusCode: 200,
+            data: file.path,
+        };
     }
 }

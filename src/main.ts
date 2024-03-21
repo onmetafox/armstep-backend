@@ -8,8 +8,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidateInputPipe());
   app.useBodyParser('json');
   app.setGlobalPrefix('api');
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+  });
   await app.listen(3000);
-
 }
 bootstrap();

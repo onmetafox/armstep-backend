@@ -50,7 +50,6 @@ export class ContactsController {
       }
   }
 
-
   @UseGuards(AuthGuard)
   @Delete(':id')
   async removeData(@Res() res, @Param('id') id: string){

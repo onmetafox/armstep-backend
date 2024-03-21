@@ -83,7 +83,7 @@ export class BaseService <T> implements ExceptionFilter { catch(exception: typeo
 
         delete where.page;
         
-        const objectsCount = await this.model.countDocuments({where}).exec();
+        const objectsCount = await this.model.countDocuments(where).exec();
         const pageCount = Math.ceil(objectsCount / this.PAGE_SIZE);
         const data = await this.model
         .find(where)

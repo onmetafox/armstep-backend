@@ -51,7 +51,7 @@ export class CreateProjectDto {
     @IsNotEmpty()
     result: string;
 
-    @IsString()
+    // @IsString()
     @IsNotEmpty()
     status: string
 }

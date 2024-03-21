@@ -1,9 +1,25 @@
-import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Post,
+  Get,
+  Res,
+  Put,
+  UseGuards,
+  Param,
+  HttpStatus,
+  Delete,
+  UseInterceptors, UploadedFile,
+} from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from 'src/dtos/services/create-service.dto';
 import { UpdateServiceDto } from 'src/dtos/services/update-service.dto';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { generateFileName } from '../../core/helper';
+import { Express } from 'express';
 @Controller('services')
 export class ServicesController {
   constructor(private readonly service: ServicesService) {}
@@ -18,7 +34,7 @@ export class ServicesController {
                 result
             })
         }catch(e){
-            return res.status(e.status).json(e.response);
+            return res.json(e.response);
         }
     }
 
@@ -77,4 +93,24 @@ export class ServicesController {
             return res.status(e.status).json(e.response);
         }
     }
+
+  @UseGuards(AuthGuard)
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: '/public/upload/services',
+        filename: (req, file, cb) => {
+          cb(null, generateFileName(file.originalname));
+        },
+      }),
+    }),
+  )
+  async local(@UploadedFile() file: Express.Multer.File) {
+    console.log(file)
+    return {
+      statusCode: 200,
+      data: file.path,
+    };
+  }
 }

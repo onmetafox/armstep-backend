@@ -27,10 +27,9 @@ export class ReviewsController {
         }
     }
     
-    @UseGuards(AuthGuard)
     @Get()
-    async findAll(@Res() res){
-        const where:BaseWhereDto = new BaseWhereDto({})
+    async findAll(@Res() res, @Body() params: any){
+        const where:BaseWhereDto = new BaseWhereDto(params)
         try{
             const result = await this.service.findAll(where);
             return res.status(HttpStatus.OK).json({
@@ -38,6 +37,7 @@ export class ReviewsController {
                 result
             })
         }catch(e){
+            console.log(e)
             return res.status(e.status).json(e.response);
         }
     }

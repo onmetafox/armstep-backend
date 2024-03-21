@@ -8,6 +8,7 @@ export interface Reviews extends Document {
     review: string;
     name: string;
     role: string   
+    profile: string;
     status: string
 }
 
@@ -30,7 +31,10 @@ export class SchemaData {
 
     @Prop({required: true})
     role: string   
-    
+
+    @Prop({required: true})
+    profile: string;
+
     @Prop({ default: "1" })
     status: string;
 }

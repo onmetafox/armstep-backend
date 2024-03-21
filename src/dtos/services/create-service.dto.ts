@@ -31,12 +31,9 @@ export class CreateServiceDto {
     @IsNotEmpty()
     subcontent: string;
 
-    @Type(()=> CreateCategoryDto)
-    catetory: CreateCategoryDto[];
+    @IsNotEmpty()
+    catetory: string[];
 
     @IsNotEmpty()
-    readonly status: string;
-
-    
-
+    status: string
 }

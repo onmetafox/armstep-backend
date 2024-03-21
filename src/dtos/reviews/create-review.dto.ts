@@ -23,8 +23,11 @@ export class CreateReviewDto {
     @IsString()
     @IsNotEmpty()
     role: string 
-    
+
     @IsString()
+    profile: string 
+    
+    // @IsString()
     @IsNotEmpty()
     status: string
 }

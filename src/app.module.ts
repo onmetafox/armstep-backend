@@ -13,6 +13,7 @@ import { TeamsModule } from './controllers/teams/teams.module';
 import { TechnologiesModule } from './controllers/technologies/technologies.module';
 import { ProjectsModule } from './controllers/projects/projects.module';
 import { ReviewsModule } from './controllers/reviews/reviews.module';
+import { ContactsModule } from './controllers/contacts/contacts.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { ReviewsModule } from './controllers/reviews/reviews.module';
     TeamsModule,
     TechnologiesModule,
     ProjectsModule,
-    ReviewsModule
+    ReviewsModule,
+    ContactsModule
   ],
   controllers: [AppController],
   providers: [

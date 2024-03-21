@@ -8,7 +8,6 @@ import { BaseService } from 'src/core/base.service';
 
 @Injectable()
 export class AuthService extends BaseService<Users>{
-    ;
 
     constructor(@InjectModel('Users') private readonly usersModel: Model<Users>, private readonly jwtService: JwtService) {
         super(usersModel);

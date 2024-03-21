@@ -3,7 +3,7 @@ import { Document, Schema as MongooseSchema, model } from 'mongoose';
 import { Categories } from "./categories.model";
 
 export interface Services extends Document {
-    logo: string;
+    icon: string;
     title: string;
     subtitle: string;
     intro: string;
@@ -17,7 +17,7 @@ export interface Services extends Document {
 @Schema({ timestamps: true })
 export class SchemaData {
     @Prop({ required: true })
-    logo: string;
+    icon: string;
 
     @Prop({ required: true })
     title: string;

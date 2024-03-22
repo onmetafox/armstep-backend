@@ -88,7 +88,7 @@ export class TeamsController {
     @UseInterceptors(
         FileInterceptor('file', {
             storage: diskStorage({
-                destination: '/public/upload/projects',
+                destination: './public/upload/teams',
                     filename: (req, file, cb) => {
                     cb(null, generateFileName(file.originalname));
                 },

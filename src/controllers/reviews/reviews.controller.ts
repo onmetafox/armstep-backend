@@ -87,7 +87,7 @@ export class ReviewsController {
     @UseInterceptors(
         FileInterceptor('file', {
             storage: diskStorage({
-                destination: '/public/upload/reviews',
+                destination: './public/upload/reviews',
                     filename: (req, file, cb) => {
                     cb(null, generateFileName(file.originalname));
                 },

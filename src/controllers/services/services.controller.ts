@@ -99,7 +99,7 @@ export class ServicesController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: '/public/upload/services',
+        destination: './public/upload/services',
         filename: (req, file, cb) => {
           cb(null, generateFileName(file.originalname));
         },

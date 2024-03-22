@@ -46,7 +46,7 @@ export class ProjectsController {
     @UseInterceptors(
         FileInterceptor('file', {
             storage: diskStorage({
-                destination: '/public/upload/projects',
+                destination: './public/upload/projects',
                     filename: (req, file, cb) => {
                     cb(null, generateFileName(file.originalname));
                 },

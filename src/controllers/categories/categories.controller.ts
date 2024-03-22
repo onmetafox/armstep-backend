@@ -40,12 +40,12 @@ export class CategoriesController {
             return res.status(e.status).json(e.response);
         }
     }
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     @Post('upload')
     @UseInterceptors(
         FileInterceptor('file', {
             storage: diskStorage({
-                destination: '/public/upload/category',
+                destination: './public/upload/category',
                     filename: (req, file, cb) => {
                     cb(null, generateFileName(file.originalname));
                 },

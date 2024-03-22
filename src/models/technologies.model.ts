@@ -5,7 +5,7 @@ import { Categories } from "./categories.model";
 export interface Technologies extends Document {
     logo: string;
     title: string;
-    category: Categories[];
+    category: string[];
     status: string;
 }
 
@@ -17,8 +17,8 @@ export class SchemaData {
     @Prop({ required: true })
     title: string;
 
-    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Categories' })
-    category: Categories[];
+    @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Categories' }] })
+    category: string[];
 
     @Prop({ default: "1" })
     status: string;

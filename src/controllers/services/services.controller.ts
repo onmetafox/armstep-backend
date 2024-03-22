@@ -43,7 +43,7 @@ export class ServicesController {
     async findAll(@Res() res){
         const where:BaseWhereDto = new BaseWhereDto({})
         try{
-            const result = await this.service.findAll(where);
+            const result = await this.service.findAllWithCategory(where);
             return res.status(HttpStatus.OK).json({
                 msg: "Service founds successfully",
                 result
@@ -56,7 +56,7 @@ export class ServicesController {
     @Get(":id")
     async findOne(@Res() res, @Param('id') id: string){
         try{
-            const result = await this.service.findOne(id);
+            const result = await this.service.findOneWithCategory(id);
             return res.status(HttpStatus.OK).json({
                 msg: "Service created successfully",
                 result

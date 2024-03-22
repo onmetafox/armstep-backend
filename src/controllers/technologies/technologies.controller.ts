@@ -27,7 +27,7 @@ export class TechnologiesController {
   async findAll(@Res() res){
       const where:BaseWhereDto = new BaseWhereDto({})
       try{
-          const result = await this.service.findAll(where);
+          const result = await this.service.findAllWithCategory(where);
           return res.status(HttpStatus.OK).json({
               msg: "Technology founds successfully",
               result
@@ -40,7 +40,7 @@ export class TechnologiesController {
   @Get(":id")
   async findOne(@Res() res, @Param('id') id: string){
       try{
-          const result = await this.service.findOne(id);
+          const result = await this.service.findOneWithCategory(id);
           return res.status(HttpStatus.OK).json({
               msg: "Technology created successfully",
               result

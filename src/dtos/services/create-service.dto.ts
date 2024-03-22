@@ -1,6 +1,4 @@
-import { IsString, IsPostalCode, IsNotEmpty, ValidateNested } from 'class-validator';
-import { CreateCategoryDto } from '../categoires/create-category.dto';
-import { Type } from 'class-transformer';
+import { IsString, IsNotEmpty, IsArray, IsMongoId } from 'class-validator';
 
 export class CreateServiceDto {
     @IsString()
@@ -32,7 +30,11 @@ export class CreateServiceDto {
     subcontent: string;
 
     @IsNotEmpty()
-    catetory: string[];
+    @IsArray()
+    @IsMongoId({
+        each: true,
+    })
+    category: string[];
 
     @IsNotEmpty()
     status: string

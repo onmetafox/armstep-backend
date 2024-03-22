@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document, Schema as MongooseSchema, model } from 'mongoose';
+import { Document, Schema as MongooseSchema, model, Types } from 'mongoose';
 import { Categories } from "./categories.model";
 
 export interface Services extends Document {
@@ -10,9 +10,21 @@ export interface Services extends Document {
     detail: string;
     content: string;
     subcontent: string;
-    category: Categories[];
+    category: string[];
     status: string;
 }
+export interface ServicePopulated extends Document {
+    title: string;
+    subtitle: string;
+    icon: string;
+    intro: string;
+    detail: string;
+    content: string;
+    subcontent: string;
+    category: Types.DocumentArray<Categories>; // Array of Category objects
+    status: string;
+}
+
 
 @Schema({ timestamps: true })
 export class SchemaData {
@@ -37,8 +49,8 @@ export class SchemaData {
     @Prop({ required: true })
     subcontent: string;
 
-    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Categories' })
-    category: Categories[];
+    @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Categories' }] })
+    category: string[];
 
     @Prop({ default: "1" })
     status: string;

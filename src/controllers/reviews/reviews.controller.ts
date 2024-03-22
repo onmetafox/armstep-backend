@@ -8,7 +8,7 @@ import { CreateReviewDto } from '../../dtos/reviews/create-review.dto';
 import { UpdateReviewDto } from '../../dtos/reviews/update-review.dto';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
-import { generateFileName } from 'src/core/helper';
+import { generateFileName, filePathClean } from 'src/core/helper';
 
 @Controller('reviews')
 export class ReviewsController {
@@ -98,7 +98,7 @@ export class ReviewsController {
         console.log(file)
         return {
             statusCode: 200,
-            data: file.path,
+            data: filePathClean(file.path)
         };
     }
   

@@ -8,7 +8,7 @@ import { CreateProjectDto } from '../../dtos/projects/create-project.dto';
 import { UpdateProjectDto } from '../../dtos/projects/update-project.dto';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
-import { generateFileName } from 'src/core/helper';
+import { generateFileName, filePathClean } from 'src/core/helper';
 
 @Controller('projects')
 export class ProjectsController {
@@ -56,7 +56,7 @@ export class ProjectsController {
     async local(@UploadedFile() file: Express.Multer.File) {
         return {
             statusCode: 200,
-            data: file,
+            data: filePathClean(file.path)
         };
     }
     @Get(":id")

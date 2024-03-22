@@ -8,7 +8,7 @@ import { CreateCategoryDto } from 'src/dtos/categoires/create-category.dto';
 import { UpdateCategoryDto } from 'src/dtos/categoires/update-category.dto';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
-import { generateFileName } from 'src/core/helper';
+import { generateFileName, filePathClean } from 'src/core/helper';
 
 @Controller('categories')
 export class CategoriesController {
@@ -40,7 +40,7 @@ export class CategoriesController {
             return res.status(e.status).json(e.response);
         }
     }
-    // @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard)
     @Post('upload')
     @UseInterceptors(
         FileInterceptor('file', {
@@ -55,7 +55,7 @@ export class CategoriesController {
     async local(@UploadedFile() file: Express.Multer.File) {
         return {
             statusCode: 200,
-            data: file.path,
+            data: filePathClean(file.path)
         };
     }
     @UseGuards(AuthGuard)

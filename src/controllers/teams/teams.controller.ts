@@ -8,7 +8,7 @@ import { UpdateTeamDto } from 'src/dtos/teams/update-team.dto';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
 import { TeamsService } from './teams.service';
-import { generateFileName } from 'src/core/helper';
+import { generateFileName, filePathClean } from 'src/core/helper';
 
 @Controller('teams')
 export class TeamsController {
@@ -99,7 +99,7 @@ export class TeamsController {
         console.log(file)
         return {
             statusCode: 200,
-            data: file.path,
+            data: filePathClean(file.path)
         };
     }
 }

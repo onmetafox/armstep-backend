@@ -18,7 +18,7 @@ import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { generateFileName } from '../../core/helper';
+import { generateFileName, filePathClean } from '../../core/helper';
 import { Express } from 'express';
 @Controller('services')
 export class ServicesController {
@@ -110,7 +110,7 @@ export class ServicesController {
     console.log(file)
     return {
       statusCode: 200,
-      data: file.path,
+      data: filePathClean(file.path)
     };
   }
 }

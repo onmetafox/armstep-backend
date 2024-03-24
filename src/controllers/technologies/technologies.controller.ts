@@ -1,9 +1,25 @@
-import { Controller, Body, Post, Get, Res, Put, UseGuards, Param, HttpStatus, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Post,
+  Get,
+  Res,
+  Put,
+  UseGuards,
+  Param,
+  HttpStatus,
+  Delete,
+  UseInterceptors, UploadedFile,
+} from '@nestjs/common';
 import { TechnologiesService } from './technologies.service';
 import { CreateTechnologyDto } from 'src/dtos/technologies/create-technology.dto';
 import { UpdateTechnologyeDto } from 'src/dtos/technologies/update-technology';
 import { BaseWhereDto } from 'src/core/base-where.dto';
 import { AuthGuard } from 'src/core/auth.strategy';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { filePathClean, generateFileName } from '../../core/helper';
+import { Express } from 'express';
 
 @Controller('technologies')
 export class TechnologiesController {
@@ -22,7 +38,6 @@ export class TechnologiesController {
       }
   }
 
-  @UseGuards(AuthGuard)
   @Get()
   async findAll(@Res() res){
       const where:BaseWhereDto = new BaseWhereDto({})
@@ -76,5 +91,25 @@ export class TechnologiesController {
       }catch(e){
           return res.status(e.status).json(e.response);
       }
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './public/upload/technologies',
+        filename: (req, file, cb) => {
+          cb(null, generateFileName(file.originalname));
+        },
+      }),
+    }),
+  )
+  async local(@UploadedFile() file: Express.Multer.File) {
+    console.log(file)
+    return {
+      statusCode: 200,
+      data: filePathClean(file.path)
+    };
   }
 }

@@ -18,6 +18,6 @@ export class CreateTechnologyDto {
     category: string[];
 
     @IsNotEmpty()
-    readonly status: string;
+    status: string;
 
 }

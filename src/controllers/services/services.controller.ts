@@ -38,7 +38,6 @@ export class ServicesController {
         }
     }
 
-    @UseGuards(AuthGuard)
     @Get()
     async findAll(@Res() res){
         const where:BaseWhereDto = new BaseWhereDto({})

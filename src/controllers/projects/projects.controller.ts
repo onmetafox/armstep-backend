@@ -59,6 +59,7 @@ export class ProjectsController {
             data: filePathClean(file.path)
         };
     }
+
     @Get(":id")
     async findOne(@Res() res, @Param('id') id: string){
         try{

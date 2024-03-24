@@ -41,7 +41,6 @@ export class TeamsController {
         }
     }
 
-    @UseGuards(AuthGuard)
     @Get()
     async findAll(@Res() res){
         const where:BaseWhereDto = new BaseWhereDto({})
